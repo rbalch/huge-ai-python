@@ -1,0 +1,34 @@
+services:
+  app:
+    container_name: app
+    build:
+      context: ./app
+      target: base
+    volumes:
+      - ./:/workspace
+      - ./app:/code # TODO: move to devcontainer.json
+      - root-history:/root/history
+      - vscode-server:/root/.vscode-server
+      - huggingface-cache:/root/.cache/huggingface
+      # - ~/.config/gcloud:/.config/gcloud # uncomment to add gcp credentials
+    stdin_open: true
+    tty: true
+    ports:
+      - "8000:8000" # serving site
+      - "5678:5678" # debugger
+    env_file:
+      - .env
+    environment:
+      DEBUG: true
+    command: uvicorn server:app --reload --host 0.0.0.0 --port 8000 --reload --log-level debug
+
+volumes:
+  root-history:
+    name: root-history
+    external: true
+  vscode-server:
+    name: vscode-server
+    external: true
+  huggingface-cache:
+    name: huggingface-cache
+    external: true

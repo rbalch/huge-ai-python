@@ -1,0 +1,28 @@
+{
+  "name": "app",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/code",
+  "mounts": [
+    "source=${localWorkspaceFolder}/app,target=/code,type=bind"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.black-formatter",
+        "esbenp.prettier-vscode"
+      ],
+      // "postCreateCommand": "make install || true",
+      "remoteEnv": {
+        "PYTHONUNBUFFERED": "1"
+      },
+      // "mounts": [
+      //   "source=${localWorkspaceFolder},target=/code,type=bind"
+      // ],
+      "forwardPorts": [
+        8000
+      ]
+    }
+  }
+}
